@@ -7,4 +7,5 @@ class User < ActiveRecord::Base
                     uniqueness: { case_sensitive: false }
   validates :location, length: { maximum: 50 } , allow_blank: true
   has_secure_password
+  has_many :microposts
 end
