@@ -10,10 +10,14 @@
 
   <div class="col-md-8">
     <h3><%= @title %></h3>
-    <%= gravatar_for @user %>
     <ul>
     <% @users.each do |user| %>
-      <%= link_to user.name, user %>
+      <div class="table">
+        <tr>
+          <th><%= link_to gravatar_for(user, size: 30), user %></th>
+          <td><%= link_to user.name, user %></td>
+      </tr>
+      </div>
     <% end %>
     </ul>
   </div>
