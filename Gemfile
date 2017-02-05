@@ -52,4 +52,5 @@ end
 gem 'kaminari'
 gem 'carrierwave'
 gem 'cloudinary'
+gem 'pry-byebug', group: :development
 

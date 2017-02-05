@@ -8,6 +8,9 @@ ja:
           has_one: "%{record}が存在しているので削除できません"
           has_many: "%{record}が存在しているので削除できません"
     attributes:
+      micropost:
+        content: 内容
+        picture: 画像
       user:
         name: 名前
         email: Eメール
