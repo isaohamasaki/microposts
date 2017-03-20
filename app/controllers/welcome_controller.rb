@@ -1,4 +1,7 @@
 class WelcomeController < ApplicationController
+	
+	before_action :logged_in_user, only: [:create, :booklog, :amazon, :bookmeter]
+	
   require 'capybara'
   require 'capybara/dsl'
   require 'capybara/poltergeist'
@@ -9,7 +12,7 @@ class WelcomeController < ApplicationController
   def index
   end
   
-  def create
+  def create2
     p "start********************************"
 
     site_config("https://account.nicovideo.jp/login?site=niconico&time=1485659938&hash_key=e233515f&next_url=")
@@ -52,8 +55,7 @@ class WelcomeController < ApplicationController
 
   def booklog
     p "start********************************"
-    Review.destroy_all
-    url = "http://booklog.jp/item/1/4873113679"
+    url = "http://booklog.jp/item/1/" + params[:text]
     
     site_config(url)
     
@@ -93,7 +95,7 @@ class WelcomeController < ApplicationController
 		  
 		  #次のページがない場合
 		  if flag == 0
-		  	redirect_to root_path
+		  	#redirect_to root_path
 		  	p "end**********************************"
 		  	return
 		  end
@@ -104,9 +106,9 @@ class WelcomeController < ApplicationController
   def amazon
     p "start********************************"
     
-    Review.destroy_all
+    url = "https://www.amazon.co.jp/product-reviews/" + params[:text] + "/ref=cm_cr_dp_see_all_summary?ie=UTF8&reviewerType=all_reviews&showViewpoints=1&sortBy=helpful"
 
-    site_config("https://www.amazon.co.jp/product-reviews/4106100037/ref=cm_cr_dp_see_all_summary?ie=UTF8&reviewerType=all_reviews&showViewpoints=1&sortBy=helpful")
+    site_config(url)
     
     driver_setting
     
@@ -138,7 +140,7 @@ class WelcomeController < ApplicationController
 		      begin
 		      	click_link ('次へ→')
 		      rescue
-		      	redirect_to root_path
+		      	#redirect_to root_path
 		  			p "end**********************************"
 		  			return
 		      end
@@ -149,7 +151,7 @@ class WelcomeController < ApplicationController
 		  
 		  #次のページがない場合
 		  if flag == 0
-		  	redirect_to root_path
+		  	#redirect_to root_path
 		  	p "end**********************************"
 		  	return
 		  end
@@ -160,8 +162,6 @@ class WelcomeController < ApplicationController
   
   def bookmeter
   	p "start********************************"
-  	
-  	Review.destroy_all
 
 		#ログインページに移動（ログインしないと一部のレビューしか見ることができないため）
     site_config("https://bookmeter.com/login")
@@ -178,8 +178,10 @@ class WelcomeController < ApplicationController
 		
 		page.save_screenshot('picture/page.png')
 		
+		url = "http://bookmeter.com/b/" + params[:text]
+		
 		#商品ページに移動
-		site_config("http://bookmeter.com/b/4101123152")
+		site_config(url)
 		
 		driver_setting
     
@@ -210,7 +212,7 @@ class WelcomeController < ApplicationController
 		  
 		  #次のページがない場合
 		  if flag == 0
-		  	redirect_to root_path
+		  	#redirect_to root_path
 		  	p "end**********************************"
 		  	return
 		  end
@@ -218,4 +220,15 @@ class WelcomeController < ApplicationController
 		end
 		
   end
+  
+  def create
+  	Review.destroy_all
+  	booklog
+  	amazon
+  	bookmeter
+  	@title = params[:text]
+  	@reviews = Review.all
+  	#redirect_to root_path
+  end
+  
 end

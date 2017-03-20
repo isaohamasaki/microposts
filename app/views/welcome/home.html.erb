@@ -1,11 +1,19 @@
 <h1>Welcome#home</h1>
 <p>Find me in app/views/welcome/home.html.erb</p>
 
-<p>POST</p>
-<%= link_to "POST", create_welcome_path, method: :post %>
-<p>booklog</p>
+<p>10桁のISBNを入力してください</p>
+<%= form_tag(create_welcome_path, method: :post) do %>
+    <%= text_field_tag :text %>
+    <%= submit_tag "レビュー一覧を取得" %>
+<% end %>
+<!--<p>booklog</p>
 <%= link_to "booklog", booklog_welcome_path, method: :post %>
+<%= form_tag(booklog_welcome_path, method: :post) do %>
+    #<%= text_field_tag :text %>
+    #<%= submit_tag "POST" %>
+<% end %>
 <p>amazon</p>
 <%= link_to "amazon", amazon_welcome_path, method: :post %>
 <p>bookmeter</p>
 <%= link_to "bookmeter", bookmeter_welcome_path, method: :post %>
+-->

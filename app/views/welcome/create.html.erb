@@ -1,0 +1,21 @@
+<h1><%= @title %>のレビュー一覧</h1>
+<div class="container">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>評価</th>
+                <th>コメント</th>
+                <th>ソース</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @reviews.each do |review| %>
+            <tr>
+                <td><%= review.evalution %></td>
+                <td><%= review.comment %></td>
+                <td><%= review.source %></td>
+            </tr>
+            <% end %>
+        </tbody>
+    </div>
+</div>
